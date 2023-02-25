@@ -1,25 +1,19 @@
-import logo from './logo.svg';
+import { useState } from "react"
 import './App.css';
+import GamePlay from "./components/views/GamePlay";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  
+  const [view, setView] = useState("gamePlay");
+
+  switch (view) {
+    case "gamePlay":
+      return (<div className="App">
+                <GamePlay setView={setView}></GamePlay>
+              </div>)
+    default:
+      return <div className="App"></div>
+  }
 }
 
 export default App;
