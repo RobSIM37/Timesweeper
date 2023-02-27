@@ -1,8 +1,9 @@
 import hidden from "../../resources/cell/hidden.png";
 import redFlag from "../../resources/cell/redFlag.png";
 import greenFlag from "../../resources/cell/greenFlag.png";
-import question from "../../resources/cell/question.png";
+import incorrectFlag from "../../resources/cell/incorrectFlag.png";
 import mine from "../../resources/cell/mine.png";
+import clearedMine from "../../resources/cell/clearedMine.png"
 import empty from "../../resources/cell/empty.png";
 import one from "../../resources/cell/one.png";
 import two from "../../resources/cell/two.png";
@@ -25,11 +26,14 @@ function Cell(props) {
         case "greenFlag":
             image = greenFlag;
             break;
-        case "question":
-            image = question;
+        case "incorrectFlag":
+            image = incorrectFlag;
             break;
         case "mine":
             image = mine;
+            break;
+        case "clearedMine":
+            image = clearedMine;
             break;
         case "0":
             image = empty;
@@ -61,25 +65,25 @@ function Cell(props) {
         default:
     }
 
-    const imageClickHandler = (e) => {
+    const imageClickHandler = () => {
         props.cellFunctions.cellClicked(props.x, props.y)
     }
 
-    const imageDoubleClickHandler = (e) => {
+    const imageDoubleClickHandler = () => {
         props.cellFunctions.cellDoubleClicked(props.x, props.y)
     }
 
     const imageRightClickHandler = (e) => {
         e.preventDefault()
         props.cellFunctions.cellRightClicked(props.x, props.y)
-        return false
     }
 
     return (
         <img alt="" className="cell" src={image}
             onClick={imageClickHandler}
             onDoubleClick={imageDoubleClickHandler}
-            onContextMenu={imageRightClickHandler}></img>
+            onContextMenu={imageRightClickHandler}>
+        </img>
     )
 }
 

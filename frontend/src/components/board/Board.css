@@ -1,6 +1,7 @@
 .board {
     display: flex;
+    margin-top: 50px;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: fit-content;
+    border: 1px solid rgb(176, 190, 197);
 }

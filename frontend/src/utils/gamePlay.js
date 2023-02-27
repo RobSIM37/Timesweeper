@@ -87,9 +87,17 @@ export const gridToDisplay = (grid) => {
                 }
             } else {
                 if (cell.isMine) {
-                    return {image: "mine", x: cell.x, y: cell.y}
+                    if (cell.marked === "flagged") {
+                        return {image: "clearedMine", x: cell.x, y: cell.y}
+                    } else {
+                        return {image: "mine", x: cell.x, y: cell.y}
+                    }
                 } else {
-                    return {image: `${cell.neighbors}`, x: cell.x, y: cell.y}
+                    if (cell.marked === "flagged") {
+                        return {image: "incorrectFlag", x: cell.x, y: cell.y}
+                    } else {
+                        return {image: `${cell.neighbors}`, x: cell.x, y: cell.y}
+                    }
                 }
             }
         })
@@ -118,7 +126,7 @@ export const autoReveal = (board, x, y) => {
     for (let dX = -1; dX < 2; dX++) {
         for (let dY = -1; dY < 2; dY++) {
             if (x + dX >= 0 && x + dX < board[0].length &&
-                y + dY >= 0 && y + dY < board.length) {
+                y + dY >= 0 && y + dY < board.length && !(dX === 0 && dY ===0)) {
                     if (board[y+dY][x+dX].marked === "flagged"){
                         flagCount++
                     }
@@ -132,4 +140,40 @@ export const autoReveal = (board, x, y) => {
         cellsToReveal.forEach(cell=> board = updateBoard(board, cell.x, cell.y))
     }
     return board;
+}
+
+export const isLoss = (board) => {
+    let isLoss = false;
+    board.forEach(row=>row.forEach(cell=>{
+        if (cell.isMine && !cell.hidden){
+            isLoss = true;
+        }
+    }));
+    return isLoss
+}
+
+export const isWin = (board) => {
+    let count = 0;
+    board.forEach(row=>row.forEach(cell=>{
+        if (cell.isMine || !cell.hidden){
+            count++
+        }
+    }));
+    return count === board.length * board[0].length;
+}
+
+export const showAll = (board) => {
+    board.forEach(row=>row.forEach(cell=>{
+        cell.hidden = false
+    }));
+    return board;
+}
+
+export const flagAll = (board) => {
+    board.forEach(row=>row.forEach(cell=>{
+        if (cell.isMine) {
+            cell.marked = "flagged"
+        }
+    }));
+    return board
 }

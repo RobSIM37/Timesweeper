@@ -9,7 +9,7 @@ function App() {
   switch (view) {
     case "gamePlay":
       return (<div className="App">
-                <GamePlay setView={setView}></GamePlay>
+                <GamePlay setView={setView} boardWidth={30} boardHeight={16} mineCount={99}></GamePlay>
               </div>)
     default:
       return <div className="App"></div>
